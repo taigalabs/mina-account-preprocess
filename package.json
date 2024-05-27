@@ -2,6 +2,9 @@
   "private": true,
   "name": "mina-account-preprocess-monorepo",
   "version": "0.0.1",
+  "scripts": {
+    "test_a": "cd contracts && pnpm run test"
+  },
   "devDependencies": {
     "@types/jest": "^29.2.4",
     "@types/node": "20.3.1",

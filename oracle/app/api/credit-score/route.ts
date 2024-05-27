@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 // @ts-ignore
-import Client from 'mina-signer';
-const client = new Client({ network: process.env.NETWORK_KIND ?? 'testnet' });
+import Client from "mina-signer";
+const client = new Client({ network: process.env.NETWORK_KIND ?? "testnet" });
 
 // Implement toJSON for BigInt so we can include values in response
 (BigInt.prototype as any).toJSON = function () {
@@ -15,7 +15,7 @@ function getSignedCreditScore(userId: number) {
   // variable.
   let privateKey =
     process.env.PRIVATE_KEY ??
-    'EKF65JKw9Q1XWLDZyZNGysBbYG21QbJf3a4xnEoZPZ28LKYGMw53';
+    "EKF65JKw9Q1XWLDZyZNGysBbYG21QbJf3a4xnEoZPZ28LKYGMw53";
 
   // We get the users credit score. In this case it's 787 for user 1, and 536
   // for anybody else :)
@@ -41,7 +41,7 @@ function getSignedCreditScore(userId: number) {
 export function GET(request: NextRequest) {
   const searchParams = new URLSearchParams(request.nextUrl.search);
   return NextResponse.json(
-    getSignedCreditScore(+(searchParams.get('user') ?? 0)),
+    getSignedCreditScore(+(searchParams.get("user") ?? 0)),
     { status: 200 }
   );
 }

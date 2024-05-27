@@ -1,9 +1,4 @@
-import {
-  Field,
-  Signature,
-  SmartContract,
-  method
-} from 'o1js';
+import { Field, Signature, SmartContract, method } from 'o1js';
 
 // The public key of our trusted data provider
 const ORACLE_PUBLIC_KEY =
