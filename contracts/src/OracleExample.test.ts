@@ -49,6 +49,51 @@ describe('OracleExample', () => {
     await txn.sign([deployerKey, zkAppPrivateKey]).send();
   }
 
+  it('power', async () => {
+    await localDeploy();
+    const oraclePublicKey = zkApp.oraclePublicKey.get();
+
+    console.log('123');
+
+    expect(oraclePublicKey).toEqual(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
+  });
+});
+
+describe('OracleExample', () => {
+  let deployerAccount: Mina.TestPublicKey,
+    deployerKey: PrivateKey,
+    senderAccount: Mina.TestPublicKey,
+    senderKey: PrivateKey,
+    zkAppAddress: PublicKey,
+    zkAppPrivateKey: PrivateKey,
+    zkApp: OracleExample;
+
+  beforeAll(async () => {
+    if (proofsEnabled) await OracleExample.compile();
+  });
+
+  beforeEach(async () => {
+    const Local = await Mina.LocalBlockchain({ proofsEnabled });
+    Mina.setActiveInstance(Local);
+    deployerAccount = Local.testAccounts[0];
+    deployerKey = deployerAccount.key;
+    senderAccount = Local.testAccounts[1];
+    senderKey = senderAccount.key;
+    zkAppPrivateKey = PrivateKey.random();
+    zkAppAddress = zkAppPrivateKey.toPublicKey();
+    zkApp = new OracleExample(zkAppAddress);
+  });
+
+  async function localDeploy() {
+    const txn = await Mina.transaction(deployerAccount, async () => {
+      AccountUpdate.fundNewAccount(deployerAccount);
+      await zkApp.deploy();
+    });
+    await txn.prove();
+    // this tx needs .sign(), because `deploy()` adds an account update that requires signature authorization
+    await txn.sign([deployerKey, zkAppPrivateKey]).send();
+  }
+
   it('generates and deploys the `OracleExample` smart contract', async () => {
     await localDeploy();
     const oraclePublicKey = zkApp.oraclePublicKey.get();
