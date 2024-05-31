@@ -14,6 +14,8 @@ let proofsEnabled = false;
 const ORACLE_PUBLIC_KEY =
   'B62qoAE4rBRuTgC42vqvEyUqCGhaZsW58SKVW4Ht8aYqP9UTvxFWBgy';
 
+const KNOWN_ADDR_1 = 'B62qkbCH6jLfVEgR36UGyUzzFTPogr2CQb8fPLLFr6DWajMokYEAJvX';
+
 describe('OracleExample', () => {
   let deployerAccount: Mina.TestPublicKey,
     deployerKey: PrivateKey,
@@ -51,11 +53,41 @@ describe('OracleExample', () => {
 
   it('power', async () => {
     await localDeploy();
-    const oraclePublicKey = zkApp.oraclePublicKey.get();
 
-    console.log('123');
+    const response = await fetch(
+      'https://07-oracles.vercel.app/api/credit-score?user=1'
+    );
+    const data = await response.json();
 
-    expect(oraclePublicKey).toEqual(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
+    console.log('data', data);
+
+    const id = Field(data.data.id);
+    const creditScore = Field(data.data.creditScore);
+    const signature = Signature.fromBase58(data.signature);
+
+    const txn = await Mina.transaction(senderAccount, async () => {
+      await zkApp.verify(id, creditScore, signature);
+    });
+    await txn.prove();
+    const signed = txn.sign([senderKey]);
+    console.log('signed', signed);
+
+    await signed.send();
+
+    const events = await zkApp.fetchEvents();
+    const verifiedEventValue = events[0].event.data.toFields(null)[0];
+    expect(verifiedEventValue).toEqual(id);
+
+    let addr = PublicKey.fromBase58(KNOWN_ADDR_1);
+    let accountUpdate = AccountUpdate.create(addr);
+
+    console.log('account update', accountUpdate);
+
+    // use the balance of this account
+    let balance = accountUpdate.account.balance.get();
+
+    console.log('balance', balance);
+    // accountUpdate.account.balance.assertEquals(balance);
   });
 });
 
