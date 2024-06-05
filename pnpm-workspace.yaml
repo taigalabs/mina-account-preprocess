@@ -1,3 +1,2 @@
 packages:
-  - "contracts"
-  - "ui"
+  - "ledger_lookup_zkapp"

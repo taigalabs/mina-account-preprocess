@@ -1,5 +1,5 @@
 {
-  "name": "contracts",
+  "name": "ledger-lookup-zkapp",
   "version": "0.1.0",
   "description": "",
   "author": "",
@@ -14,7 +14,7 @@
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "scripts": {
-    "test_a": "node --experimental-vm-modules node_modules/jest/bin/jest.js --slient=false",
+    "test_a": "node --experimental-vm-modules node_modules/jest/bin/jest.js --slient=false -t 'power'",
     "build": "tsc",
     "buildw": "tsc --watch",
     "coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",

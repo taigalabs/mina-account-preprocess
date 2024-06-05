@@ -12,7 +12,7 @@ import {
 const ORACLE_PUBLIC_KEY =
   'B62qoAE4rBRuTgC42vqvEyUqCGhaZsW58SKVW4Ht8aYqP9UTvxFWBgy';
 
-export class OracleExample extends SmartContract {
+export class Lookup extends SmartContract {
   // Define zkApp state
   @state(PublicKey) oraclePublicKey = State<PublicKey>();
 
@@ -29,6 +29,8 @@ export class OracleExample extends SmartContract {
     // Specify that caller should include signature with tx instead of proof
     this.requireSignature();
   }
+
+  @method async lookup(id: Field, creditScore: Field, signature: Signature) {}
 
   @method async verify(id: Field, creditScore: Field, signature: Signature) {
     // Get the oracle public key from the zkApp state
