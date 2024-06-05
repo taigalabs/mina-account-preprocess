@@ -30,7 +30,7 @@ export class Lookup extends SmartContract {
     this.requireSignature();
   }
 
-  @method async lookup(id: Field, creditScore: Field, signature: Signature) {}
+  @method async lookup() {}
 
   @method async verify(id: Field, creditScore: Field, signature: Signature) {
     // Get the oracle public key from the zkApp state
