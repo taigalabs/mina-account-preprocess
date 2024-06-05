@@ -14,7 +14,7 @@
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "scripts": {
-    "test_a": "node --experimental-vm-modules node_modules/jest/bin/jest.js --slient=false -t 'power'",
+    "test_a": "node --experimental-vm-modules node_modules/jest/bin/jest.js --slient=false -t 'test_1'",
     "build": "tsc",
     "buildw": "tsc --watch",
     "coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",

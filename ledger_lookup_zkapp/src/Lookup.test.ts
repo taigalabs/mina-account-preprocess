@@ -11,10 +11,6 @@ import { Lookup } from './Lookup';
 
 let proofsEnabled = false;
 
-// The public key of our trusted data provider
-const ORACLE_PUBLIC_KEY =
-  'B62qoAE4rBRuTgC42vqvEyUqCGhaZsW58SKVW4Ht8aYqP9UTvxFWBgy';
-
 const KNOWN_ADDR_1 = 'B62qkbCH6jLfVEgR36UGyUzzFTPogr2CQb8fPLLFr6DWajMokYEAJvX';
 
 describe('OracleExample', () => {
@@ -52,7 +48,7 @@ describe('OracleExample', () => {
     await txn.sign([deployerKey, zkAppPrivateKey]).send();
   }
 
-  it('power', async () => {
+  it('test_1', async () => {
     await localDeploy();
 
     const response = await fetch(
