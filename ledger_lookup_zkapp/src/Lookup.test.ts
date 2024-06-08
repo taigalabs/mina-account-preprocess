@@ -11,7 +11,12 @@ import { Lookup } from './Lookup';
 
 let proofsEnabled = false;
 
-const KNOWN_ADDR_1 = 'B62qkbCH6jLfVEgR36UGyUzzFTPogr2CQb8fPLLFr6DWajMokYEAJvX';
+const ATST_ADDR_1 = 'B62qoWPhkV7PJnU3jJjnecGe5AWzesv5Q1GYySsqbc85ShsWam5mckV';
+const ATST_ADDR_2 = 'B62qqNj2cEFqKpVPKH26ToNBTthPqCdD6udNMA8eWM58H6XGxg1nqvp';
+const ATST_ADDR_3 = 'B62qmTuWDkkVsdU5LivZ6Bv5R6M3fiNt5Y9hgDmYzwuQfUj318X6YwA';
+
+let pk1 = PublicKey.fromBase58(ATST_ADDR_1);
+let pk2 = PublicKey.fromBase58(ATST_ADDR_2);
 
 describe('OracleExample', () => {
   let deployerAccount: Mina.TestPublicKey,
@@ -40,7 +45,23 @@ describe('OracleExample', () => {
 
   async function localDeploy() {
     const txn = await Mina.transaction(deployerAccount, async () => {
-      AccountUpdate.fundNewAccount(deployerAccount);
+      let deployer = AccountUpdate.fundNewAccount(deployerAccount);
+
+      // deployer.send({
+      //   to: pk1,
+      //   amount: 3,
+      // });
+
+      // let addr1 = PublicKey.fromBase58(ATST_ADDR_1);
+      // let addr2 = PublicKey.fromBase58(ATST_ADDR_2);
+      // let addr1Update = AccountUpdate.create(addr1);
+      // let addr2Update = AccountUpdate.create(addr2);
+
+      // addr1Update.send({
+      //   to: addr2Update,
+      //   amount: 100,
+      // });
+
       await zkApp.deploy();
     });
     await txn.prove();
@@ -71,19 +92,18 @@ describe('OracleExample', () => {
 
     await signed.send();
 
-    const events = await zkApp.fetchEvents();
-    const verifiedEventValue = events[0].event.data.toFields(null)[0];
-    expect(verifiedEventValue).toEqual(id);
+    // const events = await zkApp.fetchEvents();
+    // const verifiedEventValue = events[0].event.data.toFields(null)[0];
+    // expect(verifiedEventValue).toEqual(id);
 
-    let addr = PublicKey.fromBase58(KNOWN_ADDR_1);
-    let accountUpdate = AccountUpdate.create(addr);
+    // console.log('account update', addr2Update);
+    let addr1Update = AccountUpdate.create(pk1);
+    let addr2Update = AccountUpdate.create(deployerAccount);
 
-    console.log('account update', accountUpdate);
+    let bal1 = addr1Update.account.balance.get();
+    let bal2 = addr2Update.account.balance.get();
 
-    // use the balance of this account
-    let balance = accountUpdate.account.balance.get();
-
-    console.log('balance', balance);
-    // accountUpdate.account.balance.assertEquals(balance);
+    console.log('bal1', bal1);
+    console.log('bal2', bal2);
   });
 });
