@@ -58,6 +58,7 @@ console.log(123);
   );
   const data = await response.json();
   console.log('data', data);
+
   // const id = Field(data.data.id);
   // const creditScore = Field(data.data.creditScore);
   // const signature = Signature.fromBase58(data.signature);
