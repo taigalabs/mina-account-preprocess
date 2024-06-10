@@ -14,11 +14,10 @@ let proofsEnabled = false;
 const ATST_ADDR_1 = 'B62qoWPhkV7PJnU3jJjnecGe5AWzesv5Q1GYySsqbc85ShsWam5mckV';
 const ATST_ADDR_2 = 'B62qqNj2cEFqKpVPKH26ToNBTthPqCdD6udNMA8eWM58H6XGxg1nqvp';
 const ATST_ADDR_3 = 'B62qmTuWDkkVsdU5LivZ6Bv5R6M3fiNt5Y9hgDmYzwuQfUj318X6YwA';
+const MINA_EXPLORER_ENDPOINT = 'https://api.minaexplorer.com';
 
 let pk1 = PublicKey.fromBase58(ATST_ADDR_1);
 let pk2 = PublicKey.fromBase58(ATST_ADDR_2);
-
-console.log(123);
 
 (async () => {
   if (proofsEnabled) await Lookup.compile();
