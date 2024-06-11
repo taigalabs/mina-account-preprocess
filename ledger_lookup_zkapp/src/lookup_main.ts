@@ -45,7 +45,8 @@ function getAccDetail(pk: string) {
     console.log(11, addr);
     const acc = await getAccDetail(addr);
     const json = await acc.json();
-    console.log(22, json);
+    const total = json.account?.balance.total;
+    console.log(1, total);
   }
 
   // const deployTx = await Mina.transaction(deployerAccount, async () => {
