@@ -6,7 +6,10 @@ import {
   method,
   PublicKey,
   Signature,
+  Struct,
 } from 'o1js';
+
+import { accData } from './data';
 
 // The public key of our trusted data provider
 const ORACLE_PUBLIC_KEY =
@@ -15,11 +18,6 @@ const ORACLE_PUBLIC_KEY =
 export class Lookup extends SmartContract {
   // Define zkApp state
   @state(PublicKey) oraclePublicKey = State<PublicKey>();
-
-  // Define zkApp events
-  events = {
-    verified: Field,
-  };
 
   init() {
     // Initialize zkApp state
@@ -30,8 +28,8 @@ export class Lookup extends SmartContract {
     this.requireSignature();
   }
 
-  @method async lookup(bal: Field, pk: PublicKey) {
-    console.log(22, bal, pk);
+  @method async batchRegister() {
+    console.log(11, accData);
   }
 
   @method async verify(id: Field, creditScore: Field, signature: Signature) {

@@ -6,16 +6,11 @@ import {
   AccountUpdate,
   Signature,
 } from 'o1js';
+import { accData } from './data';
 
 import { Lookup } from './lookup';
 
 let proofsEnabled = false;
-
-const atstAddrs = [
-  'B62qoUVTKseKucekfhegBxuaMkoJ37ThTE12gpGWjExV4UZvhqZD6w9',
-  'B62qkCJWFegi3Btq8FGHB29HMJBLC93T2Aurf4nzq5d46t69MAt5RSv',
-  'B62qnLst6xuPFhPE2RyQFCcDUXS75A8UhiNXqCMNVfavWSXRsKFuj9c',
-];
 
 const MINA_EXPLORER_ENDPOINT = 'https://api.minaexplorer.com';
 
@@ -41,12 +36,12 @@ function getAccDetail(pk: string) {
   let zkAppAddress = zkAppPrivateKey.toPublicKey();
   let zkApp = new Lookup(zkAppAddress);
 
-  for (const addr of atstAddrs) {
+  for (const addr of accData) {
     console.log(11, addr);
-    const acc = await getAccDetail(addr);
-    const json = await acc.json();
-    const total = json.account?.balance.total;
-    console.log(1, total);
+    // const acc = await getAccDetail(addr);
+    // const json = await acc.json();
+    // const total = json.account?.balance.total;
+    // console.log(1, total);
   }
 
   // const deployTx = await Mina.transaction(deployerAccount, async () => {
