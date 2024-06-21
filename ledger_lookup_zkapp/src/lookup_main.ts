@@ -34,32 +34,27 @@ function getAccDetail(pk: string) {
   let senderKey = senderAccount.key;
   let zkAppPrivateKey = PrivateKey.random();
   let zkAppAddress = zkAppPrivateKey.toPublicKey();
-  let zkApp = new Lookup(zkAppAddress);
+  let lookup = new Lookup(zkAppAddress);
 
-  for (const addr of accData) {
-    console.log(11, addr);
-    // const acc = await getAccDetail(addr);
-    // const json = await acc.json();
-    // const total = json.account?.balance.total;
-    // console.log(1, total);
-  }
+  const deployTx = await Mina.transaction(deployerAccount, async () => {
+    let deployer = AccountUpdate.fundNewAccount(deployerAccount);
+    // deployer.send({
+    //   to: pk1,
+    //   amount: 3,
+    // });
+    // let addr1 = PublicKey.fromBase58(ATST_ADDR_1);
+    // let addr2 = PublicKey.fromBase58(ATST_ADDR_2);
+    // let addr1Update = AccountUpdate.create(addr1);
+    // let addr2Update = AccountUpdate.create(addr2);
+    // addr1Update.send({
+    //   to: addr2Update,
+    //   amount: 100,
+    // });
+    await lookup.deploy();
+  });
 
-  // const deployTx = await Mina.transaction(deployerAccount, async () => {
-  //   let deployer = AccountUpdate.fundNewAccount(deployerAccount);
-  //   // deployer.send({
-  //   //   to: pk1,
-  //   //   amount: 3,
-  //   // });
-  //   // let addr1 = PublicKey.fromBase58(ATST_ADDR_1);
-  //   // let addr2 = PublicKey.fromBase58(ATST_ADDR_2);
-  //   // let addr1Update = AccountUpdate.create(addr1);
-  //   // let addr2Update = AccountUpdate.create(addr2);
-  //   // addr1Update.send({
-  //   //   to: addr2Update,
-  //   //   amount: 100,
-  //   // });
-  //   await zkApp.deploy();
-  // });
+  await lookup.updateAddrs();
+
   // await deployTx.prove();
   // // // this tx needs .sign(), because `deploy()` adds an account update that requires signature authorization
   // await deployTx.sign([deployerKey, zkAppPrivateKey]).send();
@@ -75,9 +70,9 @@ function getAccDetail(pk: string) {
   // const id = Field(data.data.id);
   // const creditScore = Field(data.data.creditScore);
   // const signature = Signature.fromBase58(data.signature);
-  const txn = await Mina.transaction(deployerAccount, async () => {
-    // await zkApp.lookup();
-  });
+  // const txn = await Mina.transaction(deployerAccount, async () => {
+  //   // await zkApp.lookup();
+  // });
   // await txn.prove();
   // const signed = txn.sign([senderKey]);
   // console.log('signed', signed);

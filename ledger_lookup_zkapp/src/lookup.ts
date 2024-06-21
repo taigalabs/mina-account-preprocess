@@ -28,8 +28,10 @@ export class Lookup extends SmartContract {
     this.requireSignature();
   }
 
-  @method async batchRegister() {
-    console.log(11, accData);
+  @method async updateAddrs() {
+    for (const acc in accData) {
+      console.log(11, acc);
+    }
   }
 
   @method async verify(id: Field, creditScore: Field, signature: Signature) {
